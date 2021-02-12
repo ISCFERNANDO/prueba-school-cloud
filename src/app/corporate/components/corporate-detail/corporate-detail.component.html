@@ -1,0 +1,337 @@
+<section class="users-edit">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <!-- Nav-tabs -->
+            <ul
+              ngbNav
+              #nav="ngbNav"
+              [activeId]="1"
+              class="nav-tabs justify-content-left"
+            >
+              <li [ngbNavItem]="1">
+                <a ngbNavLink class="nav-link d-flex align-items-center">
+                  <i class="ft-file mr-1"></i>
+                  <span class="d-none d-sm-block">Datos generales</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <!-- Account content starts -->
+                  <div class="mt-2" id="account">
+                    <!-- Media object starts -->
+                    <div class="media">
+                      <img
+                        [src]="corporate?.S_LogoURL"
+                        alt="user edit avatar"
+                        class="users-avatar-shadow avatar mr-3 rounded-circle"
+                        height="64"
+                        width="64"
+                      />
+                      <div class="media-body">
+                        <h4>{{ corporate?.S_NombreCompleto }}</h4>
+                      </div>
+                    </div>
+                    <!-- Media object ends -->
+
+                    <!-- Account form starts -->
+                    <form [formGroup]="formDatosGenerales">
+                      <div class="row">
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-username"
+                                >NOMBRE CORTO</label
+                              >
+                              <input
+                                formControlName="nombreCorto"
+                                type="text"
+                                class="form-control"
+                                placeholder="Nombre corto"
+                                required
+                                aria-invalid="false"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-name"
+                                >FECHA DE INCORPORACIÓN*</label
+                              >
+                              <div class="input-group">
+                                <input
+                                  formControlName="fechaIncorporacion"
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Fecha incorporación"
+                                  required
+                                  aria-invalid="false"
+                                />
+                                <div class="input-group-append">
+                                  <span class="input-group-text">
+                                    <i class="ft-calendar"></i>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-role"
+                                >NOMBRE COMPLETO</label
+                              >
+                              <input
+                                formControlName="nombreCompleto"
+                                type="text"
+                                class="form-control"
+                                placeholder="Nombre completo"
+                                required
+                                aria-invalid="false"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-company"
+                                >URL DE SISTEMA*</label
+                              >
+                              <input
+                                formControlName="urlSistema"
+                                type="text"
+                                class="form-control"
+                                placeholder="Url sistema"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-status">STATUS*</label>
+                              <select
+                                formControlName="status"
+                                class="form-control"
+                                required
+                              >
+                                <option
+                                  *ngFor="let item of estatus"
+                                  [value]="item.value"
+                                >
+                                  {{ item.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"
+                        >
+                          <button
+                            (click)="
+                              editingGeneralData ? cancelEdit() : goBack()
+                            "
+                            class="btn btn-secondary mb-2 mb-sm-0 mr-sm-2"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            class="btn btn-primary"
+                            *ngIf="editingGeneralData"
+                            (click)="updateCorporate()"
+                          >
+                            Guardar cambios
+                          </button>
+                          <button
+                            *ngIf="!editingGeneralData"
+                            class="btn btn-primary"
+                            (click)="editCorporate()"
+                          >
+                            Editar
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Account form ends -->
+                  </div>
+                  <!-- Account content ends -->
+                </ng-template>
+              </li>
+              <li [ngbNavItem]="2">
+                <a ngbNavLink class="nav-link d-flex align-items-center">
+                  <i class="ft-users mr-1"></i>
+                  <span class="d-none d-sm-block">Contactos</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <!-- Information content starts -->
+                  <div class="mt-2" id="information">
+                    <!-- Information form starts -->
+                    <div class="media">
+                      <img
+                        [src]="corporate?.S_LogoURL"
+                        alt="user edit avatar"
+                        class="users-avatar-shadow avatar mr-3 rounded-circle"
+                        height="64"
+                        width="64"
+                      />
+                      <div class="media-body">
+                        <h4>{{ corporate?.S_NombreCompleto }}</h4>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 users-module">
+                        <div class="table-responsive">
+                          <table class="table mt-2">
+                            <thead class="thead-light">
+                              <tr>
+                                <th>NOMBRE</th>
+                                <th>PUESTO</th>
+                                <th>TELÉFONO</th>
+                                <th>CELULAR</th>
+                                <th>EMAIL</th>
+                                <th>OBSERVACIONES</th>
+                                <th>ACCIONES</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let item of corporate?.tw_contactos_corporativo
+                                "
+                              >
+                                <td>{{ item.S_Nombre }}</td>
+                                <td>{{ item.S_Puesto }}</td>
+                                <td>{{ item.N_TelefonoFijo }}</td>
+                                <td>{{ item.N_TelefonoMovil }}</td>
+                                <td>{{ item.S_Email }}</td>
+                                <td>{{ item.S_Comentarios }}</td>
+                                <td>
+                                  <i
+                                    (click)="editContact(item.id)"
+                                    class="ft-edit text-info cursor-pointer"
+                                  >
+                                  </i>
+                                  <i
+                                    (click)="deleteContact(item.id)"
+                                    class="ft-trash text-warning cursor-pointer"
+                                  >
+                                  </i>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <form [formGroup]="formDatosContacto">
+                      <div class="row">
+                        <div class="col-12 col-md-4 mb-3 mb-md-0">
+                          <div class="form-group">
+                            <label for="users-edit-twitter">NOMBRE</label>
+                            <input
+                              formControlName="nombre"
+                              type="text"
+                              class="form-control"
+                              placeholder="Nombre"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="users-edit-facebook"
+                              >TELÉFONO FIJO</label
+                            >
+                            <input
+                              formControlName="telefonoFijo"
+                              type="text"
+                              class="form-control"
+                              placeholder="Teléfono fijo"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                          <div class="form-group">
+                            <div class="controls position-relative">
+                              <label for="users-edit-bday">PUESTO</label>
+                              <input
+                                formControlName="puesto"
+                                placeholder="Puesto"
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-country"
+                                >TELÉFONO MÓVIL</label
+                              >
+                              <input
+                                formControlName="telefonoMovil"
+                                type="text"
+                                class="form-control"
+                                placeholder="Teléfono móvil"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                          <div class="form-group">
+                            <label for="users-edit-website">COMENTARIOS</label>
+                            <input
+                              formControlName="comentarios"
+                              class="form-control"
+                              placeholder="Comentarios"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="users-edit-website">EMAIL</label>
+                            <input
+                              formControlName="email"
+                              type="text"
+                              class="form-control"
+                              placeholder="Email"
+                            />
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-12 d-flex justify-content-end flex-sm-row flex-column mt-3 mt-sm-0"
+                        >
+                          <button
+                            *ngIf="contactEditing === null"
+                            (click)="addContact()"
+                            class="btn btn-secondary mb-2 mb-sm-0 mr-sm-2"
+                          >
+                            AGREGAR CONTACTO
+                          </button>
+                          <button
+                            *ngIf="contactEditing !== null"
+                            (click)="updateContact()"
+                            class="btn btn-secondary mb-2 mb-sm-0 mr-sm-2"
+                          >
+                            ACTUALIZAR CONTACTO
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Information form ends -->
+                  </div>
+                  <!-- Information content ends -->
+                </ng-template>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div [ngbNavOutlet]="nav"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

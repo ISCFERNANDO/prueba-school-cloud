@@ -1,0 +1,26 @@
+# Archivo de liberación continua automatizada para la rama dev - ambiente de desarrollo en devschoolcloud.com
+image: node:10.15.3
+pipelines:
+  branches:
+    dev: # Nombre de la rama que queremos leer
+      - step:
+          name: Installation
+          caches:
+            - node
+          script:
+            - npm install # Instala módulos de la apliicación
+          artifacts:
+            - node_modules/** # Guarda el contenido para los siguientes pasos
+
+      - step:
+          name: Build
+          script:
+            - npm run build -- --configuration=dev --base-href /control/ # Corre el comando build de la aplicación de angular y le indica cuál es la subcarpeta en la que corre dentro del servidor
+          artifacts:
+            - dist/** # Guarda el contenido para los siguientes pasos
+      - step:
+          name: Deploy
+          script:
+            - echo "$(ls -la)"
+            - echo "$(ls -la dist/)"
+            - scp -r dist/** devschcl@64.15.136.94:/home/devschcl/public_html/control # Datos del servidor y carpeta donde se va a publicar

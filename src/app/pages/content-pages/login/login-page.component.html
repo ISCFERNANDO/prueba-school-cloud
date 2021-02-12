@@ -1,0 +1,47 @@
+<!--Login Page Starts-->
+<section id="login" style="background-image: url('assets/img/light-bg.jpg');">
+    <div class="row auth-height full-height-vh m-0">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="card overflow-hidden">
+                <div class="card-content">
+                    <div class="card-body auth-img">
+                        <div class="row m-0">
+                            <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
+                                <div><img src="assets/img/SC-LogoFull.svg" alt="School Cloud" class="img-fluid" width="70%"></div>
+                                <img src="assets/img/gallery/login.png" alt="Login" class="img-fluid mt-2" width="250px">
+                            </div>
+                            <div class="col-lg-6 col-12 px-4 py-3">
+                                <h4 class="mb-2 card-title">Bienvenido</h4>
+                                <p>Ingresa tu usuario y contraseña</p>
+                                <ngb-alert type="light-danger" class="mb-2" *ngIf="isLoginFailed" (close)="isLoginFailed = false">
+                                    <p class="mb-0">¡Error en los datos de acceso, favor de verificar!</p>
+                                </ngb-alert>
+                                <form [formGroup]="loginForm">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="username" class="form-control" placeholder="Usuario o correo" [ngClass]="{ 'is-invalid': loginFormSubmitted && lf.username.invalid, 'is-valid': loginFormSubmitted && !lf.username.invalid }" required>
+                                        <div *ngIf="loginFormSubmitted && (lf.username.invalid || lf.username.errors?.required)" class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Requerido</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" formControlName="password" class="form-control" placeholder="Contraseña" [ngClass]="{ 'is-invalid': loginFormSubmitted && lf.password.invalid, 'is-valid': loginFormSubmitted && !lf.password.invalid }" required>
+                                        <div *ngIf="loginFormSubmitted && (lf.password.invalid || lf.password.errors?.required)" class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Requerido
+                                        </div>
+                                    </div>
+                                    <div class="d-sm-flex justify-content-between mb-3 font-small-2">
+                                        <div class="remember-me mb-2 mb-sm-0">
+
+                                        </div>
+                                        <a [routerLink]="['/recuperarpassword']">Olvidé mi contraseña</a>
+                                    </div>
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column">
+                                        <a class="btn btn-primary" (click)="onSubmit()">Entrar</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Login Page Ends-->
