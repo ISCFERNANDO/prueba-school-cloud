@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Todos",
+    "value": -1
+  },
+  {
+    "name": "Inactivo",
+    "value": 0
+  },
+  {
+    "name": "Activo",
+    "value": 1
+  }
+]

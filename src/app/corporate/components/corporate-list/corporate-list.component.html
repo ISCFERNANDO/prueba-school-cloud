@@ -3,16 +3,15 @@
     <div class="col-12">
       <!-- Filter starts -->
       <div class="users-list-filter px-2">
-        <form>
+        <form [formGroup]="filtersForm">
           <div class="row border rounded py-2 mb-2 mx-n2">
             <div class="col-12 col-sm-6 col-lg-3">
               <label for="users-list-status">Status</label>
               <fieldset class="form-group">
-                <select id="users-list-status" class="form-control" disabled>
-                  <option value="">Any</option>
-                  <option value="Active">Active</option>
-                  <option value="Close">Close</option>
-                  <option value="Banned">Banned</option>
+                <select class="form-control" formControlName="status">
+                  <option [value]="item.value" *ngFor="let item of status">
+                    {{ item.name }}
+                  </option>
                 </select>
               </fieldset>
             </div>
@@ -20,10 +19,13 @@
             <div class="col-12 col-sm-6 col-lg-3">
               <label for="users-list-verified">CREADO POR</label>
               <fieldset class="form-group">
-                <select id="users-list-verified" class="form-control" disabled>
-                  <option value="">Any</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                <select class="form-control" formControlName="createdBy">
+                  <option
+                    [value]="item.value"
+                    *ngFor="let item of listaCreadores"
+                  >
+                    {{ item.name }}
+                  </option>
                 </select>
               </fieldset>
             </div>
@@ -31,10 +33,13 @@
             <div class="col-12 col-sm-6 col-lg-3">
               <label for="users-list-role">ASIGNADO A</label>
               <fieldset class="form-group">
-                <select id="users-list-role" class="form-control" disabled>
-                  <option value="">Any</option>
-                  <option value="User">User</option>
-                  <option value="Staff">Staff</option>
+                <select class="form-control" formControlName="assignedBy">
+                  <option
+                    *ngFor="let item of listaAsignados"
+                    [value]="item.value"
+                  >
+                    {{ item.name }}
+                  </option>
                 </select>
               </fieldset>
             </div>
@@ -68,24 +73,22 @@
               <label
                 >MOSTRAR
                 <select
-                  disabled
                   name="users-list-select"
                   class="form-control form-control-sm d-inline-block width-100 p-right-25 pl-4 mx-1"
+                  [formControl]="numItems"
                 >
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
+                  <option [value]="item.value" *ngFor="let item of maxItems">
+                    {{ item.name }}
+                  </option>
                 </select>
                 ENTRADAS
               </label>
               <label for="ngx-filter-ref" class="float-right"
                 >BUSCAR:
                 <input
-                  readonly
-                  id="ngx-filter-ref"
                   class="form-control form-control-sm d-inline-block width-200 ml-1"
                   type="text"
+                  [formControl]="filtro"
                 />
               </label>
             </fieldset>

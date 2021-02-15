@@ -6,6 +6,7 @@ import { ContactoCorporativo, Corporate } from "app/corporate/models/corporate";
 import { CorporateService } from "app/corporate/services/corporate.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import swal from "sweetalert2";
+import LIST_STATUS from "./../../data/status.json";
 
 @Component({
   selector: "app-corporate-detail",
@@ -19,16 +20,7 @@ export class CorporateDetailComponent implements OnInit {
   formDatosContacto: FormGroup;
   contactEditing: ContactoCorporativo = null;
   editingGeneralData: boolean = false;
-  estatus = [
-    {
-      name: "Inactivo",
-      value: 0,
-    },
-    {
-      name: "Activo",
-      value: 1,
-    },
-  ];
+  estatus = LIST_STATUS;
   constructor(
     private activatedRoute: ActivatedRoute,
     private corporateService: CorporateService,
